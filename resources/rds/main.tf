@@ -17,6 +17,7 @@ resource "aws_db_subnet_group" "photoshare-db-group" {
 resource "aws_security_group" "db-sg" {
   vpc_id = var.vpc_id
   description = "Security group for PhotoShare RDS database"
+  name = "db-sg"
 
   tags = {
     "Name" = "db-sg"
@@ -48,11 +49,16 @@ resource "aws_db_instance" "db-instance" {
   instance_class = var.instance_class
   storage_type = var.storage_type
   allocated_storage = var.allocated_storage
+
   username = var.username
   password = random_password.db_password.result
   db_name = var.db_name
+
   publicly_accessible = false
+  backup_retention_period = 0
+
   vpc_security_group_ids = [aws_security_group.db-sg.id]
   db_subnet_group_name = aws_db_subnet_group.photoshare-db-group.name
+
   skip_final_snapshot = false
 }
