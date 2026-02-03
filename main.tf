@@ -47,3 +47,9 @@ module "secrets-manager" {
 
   depends_on = [ module.rds ]
 }
+
+module "s3" {
+  source = "./resources/s3"
+
+  s3_bucket_name = "photoshare-assets-clb-1"
+}
