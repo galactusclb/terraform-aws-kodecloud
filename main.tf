@@ -53,3 +53,14 @@ module "s3" {
 
   s3_bucket_name = "photoshare-assets-clb-1"
 }
+
+module "alb" {
+  source = "./resources/alb"
+
+  vpc_id = module.vpc.vpc_id
+
+  public_subnets = [
+    module.vpc.public_subnet_1_id,
+    module.vpc.public_subnet_2_id,
+  ]
+}
