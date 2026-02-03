@@ -29,7 +29,7 @@ module "rds" {
 
   db_identifier = "photoshare-db"
   db_engine = "mysql"
-  db_engine_version = "8.4.0"
+  db_engine_version = "8.4.7"
   instance_class = "db.t3.micro"
   storage_type = "gp3"
   allocated_storage = 20
