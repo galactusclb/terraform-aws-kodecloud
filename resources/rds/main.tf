@@ -54,4 +54,5 @@ resource "aws_db_instance" "db-instance" {
   publicly_accessible = false
   vpc_security_group_ids = [aws_security_group.db-sg.id]
   db_subnet_group_name = aws_db_subnet_group.photoshare-db-group.name
+  skip_final_snapshot = false
 }
