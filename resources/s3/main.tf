@@ -1,9 +1,5 @@
 resource "aws_s3_bucket" "photoshare-assets-s3-bucket" {
   bucket = var.s3_bucket_name
-  
-  tags = {
-    "Name" = var.s3_bucket_name
-  }
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "photoshare_assets_encryption" {
