@@ -51,3 +51,24 @@ resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
   role = aws_iam_role.iam_role_lambda.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
+
+# # if it is not a aws manages policy
+# resource "aws_iam_policy" "read_db_secrets" {
+#   name = "read-photoshare-db-secret"
+
+#   policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Effect = "Allow"
+#         Action = ""
+#         Resource = var.db_credentials_secret_arn
+#       }
+#     ]
+#   })
+# }
+
+# resource "aws_iam_role_policy_attachment" "ec2_read_db_secret" {
+#   role = aws_iam_role.iam_role_ec2.id
+#   policy_arn = aws_iam_policy.read_db_secrets.arn
+# }

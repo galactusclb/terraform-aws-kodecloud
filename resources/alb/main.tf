@@ -7,7 +7,7 @@ resource "aws_security_group" "photoshare-sg" {
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "photoshare-sg-ingress-http" {
+resource "aws_vpc_security_group_ingress_rule" "http" {
   security_group_id = aws_security_group.photoshare-sg.id
 
   from_port = 80
@@ -16,7 +16,7 @@ resource "aws_vpc_security_group_ingress_rule" "photoshare-sg-ingress-http" {
   cidr_ipv4 = "0.0.0.0/0"
 }
 
-resource "aws_vpc_security_group_ingress_rule" "photoshare-sg-ingress-ssh" {
+resource "aws_vpc_security_group_ingress_rule" "ssh" {
   security_group_id = aws_security_group.photoshare-sg.id
 
   from_port = 22
@@ -25,7 +25,7 @@ resource "aws_vpc_security_group_ingress_rule" "photoshare-sg-ingress-ssh" {
   cidr_ipv4 = "0.0.0.0/0"
 }
 
-resource "aws_vpc_security_group_egress_rule" "photoshare-sg-egress" {
+resource "aws_vpc_security_group_egress_rule" "outbound" {
   security_group_id = aws_security_group.photoshare-sg.id
 
   ip_protocol = -1
@@ -33,7 +33,7 @@ resource "aws_vpc_security_group_egress_rule" "photoshare-sg-egress" {
   description = "Allow all outbound"
 }
 
-resource "aws_lb" "photoshare-alb" {
+resource "aws_lb" "this" {
   name = "photoshare-alb"
   load_balancer_type = "application"
 
@@ -44,10 +44,21 @@ resource "aws_lb" "photoshare-alb" {
   security_groups = [aws_security_group.photoshare-sg.id]
 }
 
-resource "aws_lb_target_group" "photoshare-alb-target-group" {
+resource "aws_lb_target_group" "this" {
   name = "photoshare-tg"
   target_type = "instance"
   port = 80
   protocol = "HTTP"
   vpc_id = var.vpc_id
+}
+
+resource "aws_lb_listener" "this" {
+  load_balancer_arn = aws_lb.this.arn
+  port = 80
+  protocol = "HTTP"
+
+  default_action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.this.arn
+  }
 }
