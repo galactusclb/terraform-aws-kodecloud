@@ -50,10 +50,10 @@ resource "aws_instance" "this" {
 
 
   user_data_replace_on_change = true
-  
-  user_data = templatefile("${path.module}/source/install.sh", {
-    var_s3_bucket = var.s3_bucket,
-    var_secret_name = var.secret_name,
+
+  user_data = templatefile("${path.module}/source/install.sh.tftpl", {
+    var_s3_bucket = var.s3_bucket
+    var_secret_name = var.secret_name
     var_docker_compose_content = file("${path.module}/source/docker-compose.yml")
   })
 

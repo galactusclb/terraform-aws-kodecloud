@@ -4,6 +4,8 @@ BUCKET_NAME=${var_s3_bucket}
 SECRET_NAME=${var_secret_name}
 DOCKER_COMPOSE_CONTENT=${var_docker_compose_content}
 
+echo "EC2: Starting application setup for environment"
+
 # Install Docker & Git
 dnf install -y docker git
 systemctl enable --now docker
