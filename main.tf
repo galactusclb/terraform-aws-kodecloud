@@ -81,7 +81,7 @@ module "ec2" {
 
   vpc_id                = module.vpc.vpc_id
   alb_security_group_id = module.alb.security_group_id
-  subnet_id             = module.vpc.private_subnet_1_id
+  subnet_id             = module.vpc.public_subnet_1_id
   ec2_role_id           = module.iam.role_ec2_id
   s3_bucket             = module.s3.S3_BUCKET_NAME
   secret_name           = module.secrets-manager.secret_name
