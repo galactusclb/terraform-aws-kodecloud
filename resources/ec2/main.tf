@@ -34,6 +34,13 @@ resource "aws_vpc_security_group_ingress_rule" "ssh" {
   cidr_ipv4 = "0.0.0.0/0"
 }
 
+resource "aws_vpc_security_group_egress_rule" "all_outbound" {
+  security_group_id = aws_security_group.this.id
+
+  ip_protocol = -1
+  cidr_ipv4 = "0.0.0.0/0"
+}
+
 resource "aws_iam_instance_profile" "ec2_role_profile" {
   name = "ec2_role_profile"
   role = var.ec2_role_id
