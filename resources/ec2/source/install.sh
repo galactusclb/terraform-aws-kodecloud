@@ -2,7 +2,7 @@
 
 BUCKET_NAME=${var_s3_bucket}
 SECRET_NAME=${var_secret_name}
-DOCKER_COMPOSE_CONTENT=$var_docker_compose_content
+DOCKER_COMPOSE_CONTENT=${var_docker_compose_content}
 
 # Install Docker & Git
 dnf install -y docker git

@@ -49,6 +49,8 @@ resource "aws_instance" "this" {
  iam_instance_profile = aws_iam_instance_profile.ec2_role_profile.id
 
 
+  user_data_replace_on_change = true
+  
   user_data = templatefile("${path.module}/source/install.sh", {
     var_s3_bucket = var.s3_bucket,
     var_secret_name = var.secret_name,
