@@ -52,6 +52,11 @@ resource "aws_lb_target_group" "this" {
   vpc_id = var.vpc_id
 }
 
+resource "aws_lb_target_group_attachment" "register_ec2" {
+  target_group_arn = aws_lb_target_group.this.arn
+  target_id = var.ec2_id
+}
+
 resource "aws_lb_listener" "this" {
   load_balancer_arn = aws_lb.this.arn
   port = 80

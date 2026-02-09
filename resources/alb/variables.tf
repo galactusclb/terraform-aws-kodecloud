@@ -12,3 +12,8 @@ variable "vpc_id" {
   description = "VPC id"
   type = string
 }
+
+variable "ec2_id" {
+  description = "EC2 id to attach to target group"
+  type = string
+}

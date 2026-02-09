@@ -29,7 +29,7 @@ resource "aws_vpc_security_group_ingress_rule" "db-sg-ingress" {
 
   from_port = 3306
   to_port = 3306
-  cidr_ipv4 = var.security_group_ingress_ip
+  referenced_security_group_id = var.security_group_ingress_id
   ip_protocol = "tcp"
   description = "Allow inbound only for entire VPC"
 }

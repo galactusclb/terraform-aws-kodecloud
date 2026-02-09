@@ -44,8 +44,8 @@ variable "db_subnet_ids" {
   type = list(string)
 }
 
-variable "security_group_ingress_ip" {
-  description = "Inbound ip address to allow ingress ip for rds"
+variable "security_group_ingress_id" {
+  description = "Inbound security group id to allow ingress ip for rds"
   type = string
 }
 
