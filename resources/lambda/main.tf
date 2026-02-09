@@ -1,7 +1,7 @@
 data "archive_file" "zip_function" {
   type = "zip"
-  source_dir = "${path.module}/functions/main.py"
-  output_path = "${path.module}/functions"
+  source_file = "${path.module}/functions/main.py"
+  output_path = "${path.module}/functions/main.zip"
 }
 
 resource "aws_lambda_function" "this" {
