@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SUBCKET_NAME=$s3_bucket
+BUCKET_NAME=$s3_bucket
 SECRET_NAME=$secret_name
 DOCKER_COMPOSE_CONTENT=$docker_compose_content
 
@@ -19,8 +19,8 @@ EOF
 
 # 4. Create the .env file
 cat <<EOF > .env
-S3_BUCKET=$SUBCKET_NAME
-AWS_SECRET_NAME=$SECRET_NAME
+S3_BUCKET=${BUCKET_NAME}
+AWS_SECRET_NAME=${SECRET_NAME}
 EOF
 
 # 5. Run the application
