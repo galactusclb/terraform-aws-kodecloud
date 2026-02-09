@@ -20,7 +20,7 @@ cat <<'EOF' > /home/ec2-user/docker-compose.yml
 ${var_docker_compose_content}
 EOF
 
-cat <<EOF > .env
+cat <<EOF > /home/ec2-user/.env
 S3_BUCKET=$BUCKET_NAME
 AWS_SECRET_NAME=$SECRET_NAME
 EOF
