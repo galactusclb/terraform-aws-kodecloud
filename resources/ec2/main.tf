@@ -42,7 +42,7 @@ resource "aws_iam_instance_profile" "ec2_role_profile" {
 resource "aws_instance" "this" {
  
  instance_type = "t3.micro"
- ami = data.aws_ssm_parameter.al2023.id
+ ami = data.aws_ssm_parameter.al2023.value
  subnet_id = var.subnet_id
  vpc_security_group_ids = [ aws_security_group.this.id ]
  associate_public_ip_address = true
