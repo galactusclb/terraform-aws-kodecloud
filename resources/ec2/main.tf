@@ -50,9 +50,9 @@ resource "aws_instance" "this" {
 
 
   user_data = templatefile("${path.module}/source/install.sh", {
-    s3_bucket = var.s3_bucket,
-    secret_name = var.secret_name
-    docker_compose_content = file("${path.module}/source/docker-compose.yml")
+    var_s3_bucket = var.s3_bucket,
+    var_secret_name = var.secret_name,
+    var_docker_compose_content = file("${path.module}/source/docker-compose.yml")
   })
 
   tags = {
