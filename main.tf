@@ -84,4 +84,5 @@ module "ec2" {
   subnet_id             = module.vpc.private_subnet_1_id
   ec2_role_id           = module.iam.role_ec2_id
   s3_bucket             = module.s3.S3_BUCKET_NAME
+  secret_name           = module.secrets-manager.secret_name
 }

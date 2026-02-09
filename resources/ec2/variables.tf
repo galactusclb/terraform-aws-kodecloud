@@ -18,3 +18,7 @@ variable "ec2_role_id" {
 variable "s3_bucket" {
   type = string
 }
+
+variable "secret_name" {
+  type = string
+}
