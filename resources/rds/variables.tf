@@ -34,6 +34,11 @@ variable "username" {
   sensitive = true
 }
 
+variable "db_port" {
+  description = "Database port"
+  type        = number
+}
+
 variable "db_name" {
   description = "Initial DB name"
   type = string

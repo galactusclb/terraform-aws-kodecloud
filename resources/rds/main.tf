@@ -27,11 +27,11 @@ resource "aws_security_group" "db-sg" {
 resource "aws_vpc_security_group_ingress_rule" "db-sg-ingress" {
   security_group_id = aws_security_group.db-sg.id
 
-  from_port = 3306
-  to_port = 3306
+  from_port = var.db_port
+  to_port = var.db_port
   referenced_security_group_id = var.security_group_ingress_id
   ip_protocol = "tcp"
-  description = "Allow inbound only for entire VPC"
+  description = "Allow inbound only from EC2"
 }
 
 resource "aws_vpc_security_group_egress_rule" "db-sg-egress" {
@@ -53,6 +53,7 @@ resource "aws_db_instance" "db-instance" {
   username = var.username
   password = random_password.db_password.result
   db_name = var.db_name
+  port = var.db_port
 
   publicly_accessible = false
   backup_retention_period = 0
@@ -61,4 +62,5 @@ resource "aws_db_instance" "db-instance" {
   db_subnet_group_name = aws_db_subnet_group.photoshare-db-group.name
 
   skip_final_snapshot = true
+  apply_immediately = true
 }

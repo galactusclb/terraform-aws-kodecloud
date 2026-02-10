@@ -36,13 +36,14 @@ module "rds" {
 
   username = "admin"
   db_name  = "photoshare"
+  db_port = 3306
 }
 
 module "secrets-manager" {
   source      = "./resources/secrets-manager"
   db_username = module.rds.db_username
   db_password = module.rds.db_password
-  db_host     = module.rds.db_endpoint
+  db_host     = module.rds.db_address
   db_name     = module.rds.db_name
 
   depends_on = [module.rds]
