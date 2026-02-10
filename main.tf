@@ -36,7 +36,7 @@ module "rds" {
 
   username = "admin"
   db_name  = "photoshare"
-  db_port = 3306
+  db_port  = 3306
 }
 
 module "secrets-manager" {
@@ -86,4 +86,11 @@ module "ec2" {
   ec2_role_id           = module.iam.role_ec2_id
   s3_bucket             = module.s3.S3_BUCKET_NAME
   secret_name           = module.secrets-manager.secret_name
+}
+
+module "cloudwatch" {
+  source = "./resources/cloudwatch"
+
+  instance_id           = module.ec2.ec2_id
+  lambda_functiona_name = module.lambda.lambda_function_name
 }

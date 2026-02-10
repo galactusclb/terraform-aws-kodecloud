@@ -1,3 +1,7 @@
+output "db_endpoint" {
+  description = "The connection host of the RDS database"
+  value = aws_db_instance.db-instance.endpoint
+}
 output "db_address" {
   description = "The connection host of the RDS database"
   value = aws_db_instance.db-instance.address

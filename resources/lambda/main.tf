@@ -39,3 +39,25 @@ resource "aws_s3_bucket_notification" "upload_notification" {
 
   depends_on = [ aws_lambda_permission.allow_s3 ]
 }
+
+
+# cloudwatch alarm
+resource "aws_cloudwatch_metric_alarm" "lambda_errors" {
+  alarm_name = "PhotoShare-Lambda-Error-Alarm"
+
+  namespace = "AWS/Lambda"
+  metric_name = "Errors"
+  statistic   = "Sum"
+  period      = 300
+  evaluation_periods = 1
+  datapoints_to_alarm = 1
+
+  threshold          = 0
+  comparison_operator = "GreaterThanThreshold"
+
+  dimensions = {
+    FunctionName = aws_lambda_function.this.function_name
+  }
+
+  treat_missing_data = "notBreaching"
+}
