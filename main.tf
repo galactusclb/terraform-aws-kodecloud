@@ -1,6 +1,6 @@
 provider "aws" {
   profile = "default"
-  region  = "us-east-1"
+  region  = var.region
 }
 
 module "vpc" {
@@ -91,6 +91,7 @@ module "ec2" {
 module "cloudwatch" {
   source = "./resources/cloudwatch"
 
+  region = var.region
   instance_id           = module.ec2.ec2_id
   lambda_functiona_name = module.lambda.lambda_function_name
 }

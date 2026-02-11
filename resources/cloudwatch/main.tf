@@ -11,6 +11,7 @@ resource "aws_cloudwatch_dashboard" "this" {
             height = 6
 
             properties = {
+                region = var.region
                 view = "timeSeries"
                 metrics = [
                     [
@@ -33,6 +34,7 @@ resource "aws_cloudwatch_dashboard" "this" {
             height = 6
 
             properties = {
+                region = var.region
                 view    = "singleValue"
                 metrics = [
                     [

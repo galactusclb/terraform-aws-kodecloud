@@ -1,3 +1,7 @@
+variable "region" {
+  type = string
+}
+
 variable "instance_id" {
   description = "EC2 instance id to config with the cloudwatch"
   type = string
