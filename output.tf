@@ -13,12 +13,6 @@ output "db_port" {
   value       = module.rds.db_port
 }
 
-output "db_username" {
-  description = "RDS database username"
-  value       = module.rds.db_username
-}
-
-
 output "db_instance_id" {
   description = "RDS database instance ID"
   value       = module.rds.db_instance_id
