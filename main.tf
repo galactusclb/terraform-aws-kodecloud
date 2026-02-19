@@ -55,7 +55,7 @@ module "secrets-manager" {
 module "s3" {
   source = "./resources/s3"
 
-  s3_bucket_name = "photoshare-assets-clb-1"
+  s3_bucket_name = var.s3_bucket_name
 }
 
 module "alb" {

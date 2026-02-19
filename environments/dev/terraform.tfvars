@@ -26,3 +26,5 @@ db_allocated_storage = 20
 db_engine = "mysql"
 db_engine_version = "8.4.7"
 
+#S3
+s3_bucket_name="photoshare-assets-clb-1"

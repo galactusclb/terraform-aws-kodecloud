@@ -84,3 +84,8 @@ variable "db_engine_version" {
   description = "Database engine version"
   type = string
 }
+
+variable "s3_bucket_name" {
+  description = "S3 bucket name"
+  type = string
+}
