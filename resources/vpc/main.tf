@@ -34,7 +34,7 @@ resource "aws_subnet" "public_subnet" {
   availability_zone = each.value.availability_zone
 
   tags = {
-    "Name" = "Public Subnet ${each.key}"
+    "Name" = "Public Subnet ${each.key+1}"
   }
 }
 
@@ -46,7 +46,7 @@ resource "aws_subnet" "private_subnet" {
   availability_zone = each.value.availability_zone
 
   tags = {
-    "Name" = "Private Subnet ${each.key}"
+    "Name" = "Private Subnet ${each.key+1}"
   }
 }
 
