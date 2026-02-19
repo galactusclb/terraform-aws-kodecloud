@@ -15,12 +15,9 @@ provider "aws" {
 module "vpc" {
   source                = "./resources/vpc"
   vpc_cidr              = var.vpc_cidr
-  public_subnet_1_cidr  = var.public_subnet_cidrs[0]
-  public_subnet_2_cidr  = var.public_subnet_cidrs[1]
-  private_subnet_1_cidr = var.private_subnet_cidrs[0]
-  private_subnet_2_cidr = var.private_subnet_cidrs[1]
-  availability_zone_1   = var.availability_zones[0]
-  availability_zone_2   = var.availability_zones[1]
+  public_subnet_cidrs = var.public_subnet_cidrs
+  private_subnet_cidrs = var.private_subnet_cidrs
+  availability_zones   = var.availability_zones
 }
 
 module "iam" {
@@ -30,13 +27,10 @@ module "iam" {
 module "rds" {
   source = "./resources/rds"
   vpc_id = module.vpc.vpc_id
-  db_subnet_ids = [
-    module.vpc.private_subnet_1_id,
-    module.vpc.private_subnet_2_id
-  ]
+  db_subnet_ids = module.vpc.private_subnet_ids
   security_group_ingress_id = module.ec2.ec2_sg_id
 
-  db_identifier     = "photoshare-db"
+  db_identifier     = var.db_instance_identifier
   db_engine         = var.db_engine
   db_engine_version = var.db_engine_version
   instance_class    = var.db_instance_class
@@ -70,10 +64,7 @@ module "alb" {
   vpc_id = module.vpc.vpc_id
   ec2_id = module.ec2.ec2_id
 
-  public_subnets = [
-    module.vpc.public_subnet_1_id,
-    module.vpc.public_subnet_2_id,
-  ]
+  public_subnets = module.vpc.public_subnet_ids
 }
 
 module "lambda" {
@@ -91,7 +82,7 @@ module "ec2" {
 
   vpc_id                = module.vpc.vpc_id
   alb_security_group_id = module.alb.security_group_id
-  subnet_id             = module.vpc.public_subnet_1_id
+  subnet_id             = module.vpc.public_subnet_ids[1]
   ec2_role_id           = module.iam.role_ec2_id
   s3_bucket             = module.s3.S3_BUCKET_NAME
   secret_name           = module.secrets-manager.secret_name

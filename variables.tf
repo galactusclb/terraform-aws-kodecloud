@@ -50,6 +50,11 @@ variable "instance_count" {
 }
 
 #DB Configuration
+variable "db_instance_identifier" {
+  description = "RDS database instance identifier"
+  type = string
+}
+
 variable "db_instance_class" {
   description = "RDS database instance class"
   type = string

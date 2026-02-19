@@ -1,3 +1,21 @@
+locals {
+  public_subnets = {
+    for key, value in var.public_subnet_cidrs :
+    key => {
+      cidr_block = value,
+      availability_zone = var.availability_zones[key]
+    }
+  }
+
+  private_subnets = {
+    for key, value in var.private_subnet_cidrs :
+    key => {
+      cidr_block = value,
+      availability_zone = var.availability_zones[key]
+    }
+  }
+}
+
 resource "aws_vpc" "photoshare-vpc" {
   cidr_block = var.vpc_cidr
   enable_dns_hostnames = true
@@ -8,43 +26,27 @@ resource "aws_vpc" "photoshare-vpc" {
   }
 }
 
-resource "aws_subnet" "public_subnet_1" {
+resource "aws_subnet" "public_subnet" {
+  for_each = local.public_subnets
+
   vpc_id = aws_vpc.photoshare-vpc.id
-  cidr_block = var.public_subnet_1_cidr
-  availability_zone = var.availability_zone_1
+  cidr_block = each.value.cidr_block
+  availability_zone = each.value.availability_zone
 
   tags = {
-    "Name" = "Public Subnet 1"
+    "Name" = "Public Subnet ${each.key}"
   }
 }
 
-resource "aws_subnet" "private_subnet_1" {
+resource "aws_subnet" "private_subnet" {
+  for_each = local.private_subnets
+
   vpc_id = aws_vpc.photoshare-vpc.id
-  cidr_block = var.private_subnet_1_cidr
-  availability_zone = var.availability_zone_1
+  cidr_block = each.value.cidr_block
+  availability_zone = each.value.availability_zone
 
   tags = {
-    "Name" = "Private Subnet 1"
-  }
-}
-
-resource "aws_subnet" "public_subnet_2" {
-  vpc_id = aws_vpc.photoshare-vpc.id
-  cidr_block = var.public_subnet_2_cidr
-  availability_zone = var.availability_zone_2
-
-  tags = {
-    "Name" = "Public Subnet 2"
-  }
-}
-
-resource "aws_subnet" "private_subnet_2" {
-  vpc_id = aws_vpc.photoshare-vpc.id
-  cidr_block = var.private_subnet_2_cidr
-  availability_zone = var.availability_zone_2
-
-  tags = {
-    "Name" = "Private Subnet 2"
+    "Name" = "Private Subnet ${each.key}"
   }
 }
 
@@ -69,14 +71,11 @@ resource "aws_route_table" "photoshare-rt" {
   }
 }
 
-resource "aws_route_table_association" "photoshare-rt-table-association-1" {
-  route_table_id = aws_route_table.photoshare-rt.id
-  subnet_id = aws_subnet.public_subnet_1.id
-}
+resource "aws_route_table_association" "photoshare-rt-table-association" {
+  for_each = aws_subnet.public_subnet
 
-resource "aws_route_table_association" "photoshare-rt-table-association-2" {
   route_table_id = aws_route_table.photoshare-rt.id
-  subnet_id = aws_subnet.public_subnet_2.id
+  subnet_id = each.value.id
 }
 
 resource "aws_route_table" "private_rt" {
@@ -87,12 +86,9 @@ resource "aws_route_table" "private_rt" {
   }
 }
 
-resource "aws_route_table_association" "private-rt-association-1" {
-  route_table_id = aws_route_table.private_rt.id
-  subnet_id = aws_subnet.private_subnet_1.id
-}
+resource "aws_route_table_association" "private-rt-association" {
+  for_each = aws_subnet.private_subnet
 
-resource "aws_route_table_association" "private-rt-association-2" {
   route_table_id = aws_route_table.private_rt.id
-  subnet_id = aws_subnet.private_subnet_2.id
+  subnet_id = each.value.id
 }

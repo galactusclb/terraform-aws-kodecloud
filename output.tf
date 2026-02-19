@@ -11,12 +11,12 @@ output "vpc_cidr" {
 
 output "public_subnet_ids" {
   description = "IDs of public subnets"
-  value = [module.vpc.public_subnet_1_id, module.vpc.public_subnet_2_id]
+  value = module.vpc.public_subnet_ids
 }
 
 output "private_subnet_ids" {
   description = "IDs of private subnets"
-  value = [module.vpc.private_subnet_1_id, module.vpc.private_subnet_2_id]
+  value = module.vpc.private_subnet_ids
 }
 
 #INSTANCES
