@@ -3,6 +3,11 @@ variable "environment" {
   type = string
 }
 
+variable "enable_tags" {
+  type    = bool
+  default = false
+}
+
 variable "region" {
   description = "AWS region where resources will be created"
   type        = string

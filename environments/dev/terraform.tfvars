@@ -1,5 +1,6 @@
 environment = "dev"
 region = "us-east-1"
+enable_tags=false
 
 common_tags = {
     ManagedBy = "Terraform"
