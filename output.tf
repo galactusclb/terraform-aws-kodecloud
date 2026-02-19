@@ -1,3 +1,33 @@
+#VPC
+output "vpc_id" {
+  description = "ID of the VPC"
+  value = module.vpc.vpc_id
+}
+
+output "vpc_cidr" {
+  description = "CIDR block of the VPC"
+  value = module.vpc.vpc_cidr
+}
+
+output "public_subnet_ids" {
+  description = "IDs of public subnets"
+  value = [module.vpc.public_subnet_1_id, module.vpc.public_subnet_2_id]
+}
+
+output "private_subnet_ids" {
+  description = "IDs of private subnets"
+  value = [module.vpc.private_subnet_1_id, module.vpc.private_subnet_2_id]
+}
+
+#INSTANCES
+
+#LOAD BALANCER
+output "load_balancer_dns" {
+  description = "DNS name of the load balancer"
+  value = module.alb.dns_name
+}
+
+# DB
 output "db_address" {
   description = "RDS database address"
   value       = module.rds.db_address

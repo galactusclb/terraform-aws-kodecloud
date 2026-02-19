@@ -1,17 +1,26 @@
 provider "aws" {
   profile = "default"
   region  = var.region
+
+  default_tags {
+    tags = merge(
+      var.common_tags,
+      {
+        Environment = var.environment
+      }
+    )
+  }
 }
 
 module "vpc" {
   source                = "./resources/vpc"
-  vpc_cidr              = "10.0.0.0/16"
-  public_subnet_1_cidr  = "10.0.1.0/24"
-  public_subnet_2_cidr  = "10.0.3.0/24"
-  private_subnet_1_cidr = "10.0.2.0/24"
-  private_subnet_2_cidr = "10.0.4.0/24"
-  availability_zone_1   = "us-east-1a"
-  availability_zone_2   = "us-east-1b"
+  vpc_cidr              = var.vpc_cidr
+  public_subnet_1_cidr  = var.public_subnet_cidrs[0]
+  public_subnet_2_cidr  = var.public_subnet_cidrs[1]
+  private_subnet_1_cidr = var.private_subnet_cidrs[0]
+  private_subnet_2_cidr = var.private_subnet_cidrs[1]
+  availability_zone_1   = var.availability_zones[0]
+  availability_zone_2   = var.availability_zones[1]
 }
 
 module "iam" {
@@ -28,14 +37,14 @@ module "rds" {
   security_group_ingress_id = module.ec2.ec2_sg_id
 
   db_identifier     = "photoshare-db"
-  db_engine         = "mysql"
-  db_engine_version = "8.4.7"
-  instance_class    = "db.t3.micro"
+  db_engine         = var.db_engine
+  db_engine_version = var.db_engine_version
+  instance_class    = var.db_instance_class
   storage_type      = "gp3"
-  allocated_storage = 20
+  allocated_storage = var.db_allocated_storage
 
-  username = "admin"
-  db_name  = "photoshare"
+  username = var.db_username
+  db_name  = var.db_name
   db_port  = 3306
 }
 
